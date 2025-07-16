@@ -1,0 +1,22 @@
+html , body , #root{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.app{ 
+  height: 100%;
+  margin: 0 auto;
+  
+  text-align: center;
+  border : 2px solid blue;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;}
+
+.middle {
+  flex-grow: 1;
+  border : 1px solid red;
+  display:grid;
+  grid-template-columns: 1fr 3fr 1fr;
+}
