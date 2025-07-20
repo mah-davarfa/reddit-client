@@ -1,9 +1,6 @@
 import React from 'react';
-import VoiceSearchBar from './components/VoiceSearchBar';
-import SubredditList from './components/SubredditList';
 import TrendingSidebar from './components/TrendingSidebar';
 import PostShowcase from './components/PostShowcase';
-import Footer from './components/Footer';
 import AppLayout from './components/AppLayout';
 import {
   Route,
