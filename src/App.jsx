@@ -23,7 +23,7 @@ return (
             <TrendingSidebar />
           </>
           } />
-        <Route path='/result/:subreditt/:search/:trend' element={<PostShowcase />} />
+        <Route path='/result/:source/:searchQuery' element={<PostShowcase />} />
         <Route path='/moretrending' element={
          <>
             <PostShowcase/>
