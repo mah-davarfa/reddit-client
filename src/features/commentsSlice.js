@@ -6,12 +6,23 @@ const initialState ={
     status:'idle',
     error: null,
 }
+//https://www.reddit.com/comments/{postId}.json but we using backend server to get comments
 
 export const fetchComments = createAsyncThunk('comments/fetchComments', async(postId)=>{
+    //console.log('comment Thunk postId: ', postId);
     const response = await axios.get(`/api/comments/${postId}`);
-    console.log('response.data: ', response.data);
-    return response.data;
-})
+    //console.log('comment Thunk  response.data[1].data.children.map((item)=>item.data: ', response.data[1].data.children.map((item)=>item.data));
+    //console.log('comment Thunk  response.data[1].data.children.map((item)=>item.data.body: ', response.data[1].data.children.map((item)=>item.data.body));
+   const items = response.data[1].data.children.map((item)=>item.data);
+   const cleanedComments = items.map((comment)=>{
+    const commentNeeded=comment.body
+    return {
+        comment:commentNeeded 
+    }});
+    //console.log('cleanedComments: ', cleanedComments);
+    
+    return cleanedComments;
+     })
 
 export const commentsSlice = createSlice({
     name: 'comments',
