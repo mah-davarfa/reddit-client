@@ -18,12 +18,25 @@ const PostShowcase = () => {
   const error = useSelector(selectPostError);
 
   const [galleryIndex, setGalleryIndex] = useState({});
+  const [selectedPostId, setSelectedPostId] = useState(null);
+const [selectedCommentsByPostId, setSelectedCommentsByPostId] = useState({});
+const [commentIndex , setCommentIndex] = useState({ });
+
   useEffect(() => {
     if (searchQuery) {
       dispatch(fetchposts(searchQuery));
     }
   }, [searchQuery, dispatch]);
- 
+
+  //after receiving comments(commentsForPost) from slice accummulating Array of comments objects based on thier post's id in object(selectedCommentsByPostId) 
+ useEffect(()=>{
+   if (commentsForPost.length > 0 && selectedPostId){
+        setSelectedCommentsByPostId((perv)=>({
+     ...perv,
+      [selectedPostId]:commentsForPost
+   }));
+  }
+      },[commentsForPost, selectedPostId]);
   if (status === "loading") return <p>Loading...</p>;
   if (status === "rejected") return <p>Error: {error}</p>;
   
@@ -37,43 +50,67 @@ const PostShowcase = () => {
 
 ///Gallery Image Cycling Logic
 const postId = post.id;
-   const currentIndex = galleryIndex[postId] || 0;  //console.log('currentIndex',currentIndex);
-  const imageItem = gallery.items[currentIndex];  //console.log('imageItem',imageItem);
+   const currentPictureIndex = galleryIndex[postId] || 0;  //console.log('currentPictureIndex',currentPictureIndex);
+  const imageItem = gallery.items[currentPictureIndex];  //console.log('imageItem',imageItem);
   const imageUrl = media[imageItem.media_id]?.s?.u?.replaceAll("&amp;", "&");
   
   //console.log('imageUrl',imageUrl);
-
-  const handleNext = () => {
+   
+  const handleNextPicture = () => {
     setGalleryIndex((prev) => ({//accumulating arll post ids and their current index to keep track of which image is being displayed
       ...prev,
-      [postId]: (currentIndex + 1) % gallery.items.length//loop back to zero when reaching the end
+      [postId]: (currentPictureIndex + 1) % gallery.items.length//loop back to zero when reaching the end
     }));
   };
-
+  const handlePreviusePicture = () => {
+    setGalleryIndex((prev) => ({
+      ...prev,
+      [postId]: (currentPictureIndex - 1 + gallery.items.length) % gallery.items.length
+    }));
+  };
+  console.log('gallery', gallery);
+  console.log('galleryIndex', galleryIndex);
   return (
   
     <div className="gallery">
       <img
         src={imageUrl}
         alt="Gallery Slide"
-        onClick={handleNext}
+        onClick={handleNextPicture}
         width="50%"
        
        />
-      <p onClick={handleNext} >{currentIndex + 1} / {gallery.items.length} {'>>'}</p>
+      <p onClick={handleNextPicture} >{currentPictureIndex + 1} / {gallery.items.length} Next Picture{'>>'}</p>
+      <p onClick={handlePreviusePicture} >{'<<'} Previous Picture </p>
     </div>
   );
   };
+
   const  handleGetComment = (post) => {
+    const postId = post.id;
     if(post.ups>0)
     dispatch(fetchComments(post.id));
-     
-       if (commentsStatus === "loading") return <p>Loading...</p>;
-       if (commentsError === "rejected") return <p>Error: {error}</p>;
-       
-  }
+     setSelectedPostId(postId);
+       }
 
+       //we have object of postIds that each postId has array of comments's objects
+       //  then to choose each comment we need index for that comment
+  
+  const handleNextComment =(postId)=>{
+  
+  setCommentIndex((prevIndex)=>({
+    ...prevIndex ,
+    [postId]: ((prevIndex[postId]|| 0 )+1 )% selectedCommentsByPostId[postId].length,
+  }));
+ 
+}
 
+  //    console.log('commentsForPost: ', commentsForPost);
+  //     console.log('SelectedCommentsByPostId:',selectedCommentsByPostId)
+  //   console.log('selectedPostId: ', selectedPostId);
+  // console.log('commentIndex: ', commentIndex);
+  // console.log('commentIndex[selectedPostId]: ', commentIndex[selectedPostId]);
+  
   return (
     <div>
       <h1>PostShowcase</h1>
@@ -99,11 +136,26 @@ const postId = post.id;
            
           )}
            <p>Upvotes: {post.ups}</p>
-           <p onClick={()=>handleGetComment(post)}>Comments : {post.comments}</p>
+           <p onClick={()=>handleGetComment(post)}>Get All {post.comments} Comments </p>
            {commentsStatus === 'loading' && <p>Loading comments...</p>}
            {commentsStatus === 'rejected' && <p>Error loading comments</p>}
+           
+           {selectedCommentsByPostId[post.id] ? (
+           (Array.isArray(selectedCommentsByPostId[post.id]) ? (
+            <div>
+              <h3>Comments:</h3> {///////////still when there are 2  comments for 2 post the last one only changes by clicking on any of these 2 post!!}
+              }
+              <p >{selectedCommentsByPostId[post.id][commentIndex[post.id] || 0]?.comment} </p>
+              <p onClick={()=>handleNextComment(post.id)}>
+                Next Comment: {'>>>'} {(commentIndex[post.id] || 0) + 1}/{selectedCommentsByPostId[post.id].length}</p>
+            </div>
+           ) : null)): null}
+          
         </div>
       ))}
+      <div>
+        
+      </div>
     </div>
   );
 };
