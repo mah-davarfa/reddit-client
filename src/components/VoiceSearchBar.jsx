@@ -12,7 +12,7 @@ const onSearchHandler = (e) => {
     e.preventDefault();
     const searchQuery = searchinputRef.current.value;
     ////send searchQuery to postshowcase and then fetch from there
-    //// change the url that postShoCase sees it and postshowcase grabs searchWuery for dispatch,
+    //// change the url that postShoCase sees it and postshowcase grabs searchquery for dispatch,
     
     navigate(`/result/search/${searchQuery}`); 
     

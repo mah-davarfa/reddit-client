@@ -22,6 +22,7 @@ export const fetchComments = createAsyncThunk('comments/fetchComments', async(po
   console.log('cleanedComments: ', cleanedComments);
   return cleanedComments;
 });
+ 
 export const commentsSlice = createSlice({
     name: 'comments',
     initialState,

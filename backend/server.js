@@ -33,7 +33,7 @@ app.get('/api/search',async (req ,res)=>{
     }
 });
     
-    //conetion path to clint app:'/api/comments'
+    //conetion path to clint app:'/api/comments' in slice we have (`/api/comments/${postId}`)
 app.get('/api/comments/:postId', async (req ,res)=>{
     const {postId} = req.params; // because thunk is: (`/api/comments/${postId}`)Extracts the postId from the request parameters
    try{
@@ -45,6 +45,19 @@ app.get('/api/comments/:postId', async (req ,res)=>{
         res.status(500).json({error: 'Failed to fetch comments'});
     }
 })
+
+//conection to clint (subredditlistsSlice) fetching using (/api/subredditlists/popular)
+app.get('/api/subredditlists/:popular',async(req, res)=>{
+    const {popular} = req.params; // Extracts the popular parameter from the request parameters
+    try{
+        const response = await axios.get (`https://www.reddit.com/subreddits/${popular}.json`);
+        res.json(response.data); // Sends the subreddit lists data back to the client(subredditListsSlice)
+
+    }catch(error){
+        res.status(500).json({error: 'Failed to fetch subreddit lists in startup'});
+    }
+})
+
 // this opens the door for clint app to comiunicate with the backend server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

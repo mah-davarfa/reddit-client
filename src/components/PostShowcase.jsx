@@ -19,8 +19,8 @@ const PostShowcase = () => {
 
   const [galleryIndex, setGalleryIndex] = useState({});
   const [selectedPostId, setSelectedPostId] = useState(null);
-const [selectedCommentsByPostId, setSelectedCommentsByPostId] = useState({});
-const [commentIndex , setCommentIndex] = useState({ });
+  const [selectedCommentsByPostId, setSelectedCommentsByPostId] = useState({});
+  const [commentIndex , setCommentIndex] = useState({ });
 
   useEffect(() => {
     if (searchQuery) {
@@ -68,8 +68,8 @@ const postId = post.id;
       [postId]: (currentPictureIndex - 1 + gallery.items.length) % gallery.items.length
     }));
   };
-  console.log('gallery', gallery);
-  console.log('galleryIndex', galleryIndex);
+  // console.log('gallery', gallery);
+  // console.log('galleryIndex', galleryIndex);
   return (
   
     <div className="gallery">
@@ -129,12 +129,7 @@ const postId = post.id;
             <img src={post.url} alt={post.title} width="50%"  />
           ) : post.url?.includes("/gallery/") && post.media_metadata ? (
             renderGallery(post)
-          ) : (
-            <a href={post.url} target="_blank" rel="noopener noreferrer">
-              View Content
-            </a>
-           
-          )}
+          ):null }
            <p>Upvotes: {post.ups}</p>
            <p onClick={()=>handleGetComment(post)}>Get All {post.comments} Comments </p>
            {commentsStatus === 'loading' && <p>Loading comments...</p>}
