@@ -1,5 +1,5 @@
 import React from 'react';
-import TrendingSidebar from './components/TrendingSidebar';
+
 import PostShowcase from './components/PostShowcase';
 import AppLayout from './components/AppLayout';
 import {
@@ -17,27 +17,14 @@ return (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<AppLayout />}>
-        <Route index element={
-          <>
-            <PostShowcase />
-            <TrendingSidebar />
-          </>
-          } />
-        <Route path='/result/:source/:searchQuery' element={<PostShowcase />} />
-        <Route path='/moretrending' element={
-         <>
-            <PostShowcase/>
-            <TrendingSidebar mode='expanded'/>
-          </>
-        } />
-        
-      </Route>
+        <Route index element={<PostShowcase />} />
+         <Route path='/result/:searchQuery' element={<PostShowcase />} />
+        </Route>
     </Routes>
-  </BrowserRouter>
-)
+  </BrowserRouter> 
+   )
  }
 
-export default App
-
-
-
+export default App     
+          
+      

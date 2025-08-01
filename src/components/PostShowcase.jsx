@@ -1,5 +1,6 @@
 import React, { use, useEffect, useState } from "react";
 import { fetchposts, selectorPosts, selectPostStatus, selectPostError } from "../features/postsSlice";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useParams} from "react-router-dom";
 import {selectComments,selectCommentsStatus,selectCommentsError,fetchComments} from '../features/commentsSlice';
@@ -25,6 +26,7 @@ const PostShowcase = () => {
   useEffect(() => {
     if (searchQuery) {
       dispatch(fetchposts(searchQuery));
+
     }
   }, [searchQuery, dispatch]);
 
@@ -57,7 +59,7 @@ const postId = post.id;
   //console.log('imageUrl',imageUrl);
    
   const handleNextPicture = () => {
-    setGalleryIndex((prev) => ({//accumulating arll post ids and their current index to keep track of which image is being displayed
+    setGalleryIndex((prev) => ({//accumulating all post ids and their current index to keep track of which image is being displayed
       ...prev,
       [postId]: (currentPictureIndex + 1) % gallery.items.length//loop back to zero when reaching the end
     }));
@@ -131,15 +133,15 @@ const postId = post.id;
             renderGallery(post)
           ):null }
            <p>Upvotes: {post.ups}</p>
-           <p onClick={()=>handleGetComment(post)}>Get All {post.comments} Comments </p>
+           <p onClick={()=>handleGetComment(post)} className={'getComment'}>Get All {post.comments} Comments </p>
            {commentsStatus === 'loading' && <p>Loading comments...</p>}
            {commentsStatus === 'rejected' && <p>Error loading comments</p>}
            
            {selectedCommentsByPostId[post.id] ? (
            (Array.isArray(selectedCommentsByPostId[post.id]) ? (
             <div>
-              <h3>Comments:</h3> {///////////still when there are 2  comments for 2 post the last one only changes by clicking on any of these 2 post!!}
-              }
+              <h3>Comments:</h3> 
+               
               <p >{selectedCommentsByPostId[post.id][commentIndex[post.id] || 0]?.comment} </p>
               <p onClick={()=>handleNextComment(post.id)}>
                 Next Comment: {'>>>'} {(commentIndex[post.id] || 0) + 1}/{selectedCommentsByPostId[post.id].length}</p>
