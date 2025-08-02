@@ -25,21 +25,41 @@ const SubredditList = () => {
  const [selectedSubreddit, setSelectedSubreddit] = useState(null);
 
  return (
-    <div>
-        <div className='subreddit-list-bigerScreen'>
-            <h1> SubredditLists </h1>
-            {subredditListsStatus === 'loading' && <p>Loading...</p>}
-            {subredditListsStatus === 'rejected' && <p>Error: {subredditListsError}</p>}
-            {subredditListsStatus === 'success' && (popularsubredditLists.map((item)=>(
-            item.url ? (
-                <div key={item.id} url={item.url} className={selectedSubreddit === item.url ? 'selected' : ''}>
+    <div className="subreddit-wrapper">
+        <div className="subreddit-list-bigScreen">
+          <h1>Subreddit Lists</h1>
+          <div className="subreddit-scrollable">
+            {subredditListsStatus === 'success' &&
+              popularsubredditLists.map((item) =>
+                item.url ? (
+                  <div
+                    key={item.id}
+                    className={`subreddit-card ${
+                      selectedSubreddit === item.url ? 'selected' : ''
+                    }`}
+                  >
                     <h3>{item.title}</h3>
-                    {item.img ? <img src={item.img } alt={item.name}  />: null}
+                    {item.img && (
+                      <img
+                        src={item.img}
+                        alt={item.name}
+                        className="subreddit-img"
+                      />
+                    )}
                     <p>{item.name}</p>
-                    <button onClick={()=>handleToGetSubreddit(item.url)}>Try the {item.name}</button>
-                </div>) : null  
-            )))}
+                    <button
+                      className="app-button"
+                      onClick={() => handleToGetSubreddit(item.url)}
+                    >
+                      Try the {item.name}
+                    </button>
+                  </div>
+                ) : null
+              )}
+          </div>
         </div>
+
+
         <div className='subreddit-list-smallerScreen'>
             <select onChange={(e)=>handleToGetSubreddit(e.target.value)}>
                 <option value=' '>Subreddit</option>

@@ -22,7 +22,7 @@ const PostShowcase = () => {
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [selectedCommentsByPostId, setSelectedCommentsByPostId] = useState({});
   const [commentIndex , setCommentIndex] = useState({ });
-
+  const [isGetCommentClicked, setIsGetCommentClicked] = useState([]);
   useEffect(() => {
     if (searchQuery) {
       dispatch(fetchposts(searchQuery));
@@ -93,38 +93,43 @@ const postId = post.id;
     if(post.ups>0)
     dispatch(fetchComments(post.id));
      setSelectedPostId(postId);
-       }
-
+    setIsGetCommentClicked((prev)=>[...prev, postId]);
        //we have object of postIds that each postId has array of comments's objects
        //  then to choose each comment we need index for that comment
-  
+}
   const handleNextComment =(postId)=>{
-  
   setCommentIndex((prevIndex)=>({
     ...prevIndex ,
     [postId]: ((prevIndex[postId]|| 0 )+1 )% selectedCommentsByPostId[postId].length,
   }));
- 
-}
-
+ }
+  function phandlePreviuseComment(postId) {
+    setCommentIndex((prevIndex)=>({
+      ...prevIndex,
+      [postId]: 
+      (((prevIndex[postId]|| 0) -1 + selectedCommentsByPostId[postId].length)% 
+      selectedCommentsByPostId[postId].length),
+    }))
+  }
   //    console.log('commentsForPost: ', commentsForPost);
-  //     console.log('SelectedCommentsByPostId:',selectedCommentsByPostId)
-  //   console.log('selectedPostId: ', selectedPostId);
-  // console.log('commentIndex: ', commentIndex);
+      console.log('SelectedCommentsByPostId:',selectedCommentsByPostId)
+    console.log('selectedPostId: ', selectedPostId);
+  console.log('commentIndex: ', commentIndex);
   // console.log('commentIndex[selectedPostId]: ', commentIndex[selectedPostId]);
   
-  return (
-    <div>
-      <h1>PostShowcase</h1>
+ return (
+  <div className="postshowcase-wrapper">
+    <h1>PostShowcase</h1>
+    <div className="postshowcase-scrollable">
       {posts.map((post) => (
-        <div key={post.id} >
+        <div key={post.id} className="postshowcase-item">
           <h2>{post.title}</h2>
           <p>Subreddit: {post.subreddit}</p>
           
                       
           {post.is_video ? (
             
-            <video src={post.url} controls muted width="50%" height="50%">
+            <video src={post.url} controls muted width="50%"  >
               Your browser does not support the video tag.
             </video>
           ) : isImageUrl(post.url) ? (
@@ -133,25 +138,29 @@ const postId = post.id;
             renderGallery(post)
           ):null }
            <p>Upvotes: {post.ups}</p>
-           <p onClick={()=>handleGetComment(post)} className={'getComment'}>Get All {post.comments} Comments </p>
+           <p onClick={()=>handleGetComment(post)} className={isGetCommentClicked.some(id=>id===post.id) ?'commentClicked':'getComment'} >Get All {post.comments} Comments </p>
            {commentsStatus === 'loading' && <p>Loading comments...</p>}
            {commentsStatus === 'rejected' && <p>Error loading comments</p>}
            
            {selectedCommentsByPostId[post.id] ? (
            (Array.isArray(selectedCommentsByPostId[post.id]) ? (
-            <div>
+          <div>
               <h3>Comments:</h3> 
-               
-              <p >{selectedCommentsByPostId[post.id][commentIndex[post.id] || 0]?.comment} </p>
-              <p onClick={()=>handleNextComment(post.id)}>
-                Next Comment: {'>>>'} {(commentIndex[post.id] || 0) + 1}/{selectedCommentsByPostId[post.id].length}</p>
+            
+              <p className="comment-text">{selectedCommentsByPostId[post.id][commentIndex[post.id] || 0]?.comment} </p>
+           <div className={'nextComment'}>
+              <p onClick={()=>handleNextComment(post.id)} >
+                Next Comment: {'>>>'} {(commentIndex[post.id] || 0) + 1}/{selectedCommentsByPostId[post.id].length}
+              </p>
+              < p onClick= {()=>phandlePreviuseComment(post.id)} >
+                {'<<<'}Previous comment  
+              </p>
             </div>
+          </div>
            ) : null)): null}
           
         </div>
       ))}
-      <div>
-        
       </div>
     </div>
   );

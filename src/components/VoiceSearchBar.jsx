@@ -1,13 +1,13 @@
 import React from "react";
 import { useNavigate ,createSearchParams} from "react-router-dom";
-import {useRef} from 'react';
+import {useRef,useState} from 'react';
 
 
 
  const VoiceSearchBar = () => {
 const searchinputRef = useRef();
 const navigate = useNavigate();
-
+const [isListening, setIsListening] = useState(false);
 const sinitizedQuery =(query)=>{
     return query.replace(/[<>/"';]/g, ' ');
 }
@@ -22,44 +22,65 @@ const onSearchHandler = (e) => {
     navigate(`/result/${encodedQuery}`); 
     };
 
-const handleVoiceSearch = () => { 
-    const recognition = 
-    window.SpeechRecognition || window.webkitSpeechRecognition? 
-    new (window.SpeechRecognition || window.webkitSpeechRecognition)()
-    :null;
+const handleVoiceSearch = () => {
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = SpeechRecognition ? new SpeechRecognition() : null;
 
-    if(!recognition){
-      alert("Speech recognition not supported in this browser.");
-      return;
-    }
-     recognition.lang = "en-US";
-     recognition.interimResults = false;
+  if (!recognition) {
+    alert("Speech recognition not supported in this browser.");
+    return;
+  }
 
-    recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript; 
-        searchinputRef.current.value = transcript; 
-        const encodedQuery = encodeURIComponent(transcript);
-       navigate(`/result/${encodedQuery}`);
+  recognition.lang = "en-US";
+  recognition.interimResults = false;
 
-       };
-          recognition.onerror = (e) => { 
-            console.error('Voice recognition error:', e); 
-        };
+  setIsListening(true); // Start animation
 
-        recognition.start(); 
-}    
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    searchinputRef.current.value = transcript;
+
+    // Auto-search once result is received
+    const sanitized = sinitizedQuery(transcript.trim());
+    const encodedQuery = encodeURIComponent(sanitized);
+    setIsListening(false);
+    navigate(`/result/${encodedQuery}`);
+  };
+
+  recognition.onerror = (e) => {
+    console.error("Voice recognition error:", e);
+    setIsListening(false); // Stop animation
+  };
+
+  recognition.onend = () => {
+    setIsListening(false); // Stop if user cancels or times out
+  };
+
+  recognition.start();
+};
+
     /// till loading the button need to be disable.
  return (
     <div>
-        <h1> VoiceSearchBar   </h1>
-        <div>
-           <form onSubmit={onSearchHandler} >
-            <button  type='submit'>Search</button>
-            <input type="text" placeholder="Search..." ref={searchinputRef}/>
-            <button type='button' onClick={handleVoiceSearch}>🎤</button>
-           </form>
-    </div>
- </div>
+        <h1>Search Reddit by Voice or Text</h1>
+        <div className="voice-search-container">
+          <form className="voice-search-form" onSubmit={onSearchHandler}>
+            <input
+              type="text"
+              placeholder="Search..."
+              ref={searchinputRef}
+              className={`voice-search-input ${isListening ? "listening" : ""}`}
+            />
+            <button type="submit" className="voice-search-button">
+              Search
+            </button>
+            <button type="button" className="voice-mic-button" onClick={handleVoiceSearch}>
+              🎤
+            </button>
+          </form>
+        </div>
+   </div>
 ) 
 }
 export default VoiceSearchBar;

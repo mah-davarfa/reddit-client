@@ -12,6 +12,7 @@ const trendingSubreddits = [
   'picture',
   'Showerthoughts',
   'aww',
+  
 ];
 
 const TrendingSidebar = () => {
@@ -26,13 +27,22 @@ const getItem = (item) => {
 
 
  return (
-    <div className="trending-sidebar">
-        <h1> Do NOT Miss This Section   </h1>
-       { trendingSubreddits.map((item)=>(
-            <button key={item} value={item} onClick={()=>getItem(item)}className={isClicked===item  ? 'selected' : ''}>
-                 {item}
-            </button>
-        ))}
+<div className="trending-sidebar-wrapper">
+  <div className="trending-sidebar">
+    <h1 className="trending-title">Do NOT Miss This Section</h1>
+    <div className="trending-scrollable">
+      {trendingSubreddits.map((item) => (
+        <button
+          key={item}
+          value={item}
+          onClick={() => getItem(item)}
+          className={isClicked === item ? 'selected' : ''}
+        >
+          {item}
+        </button>
+      ))}
     </div>
+  </div>
+</div>
 ) }
 export default TrendingSidebar;
