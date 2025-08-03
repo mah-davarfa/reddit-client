@@ -459,11 +459,11 @@ h3{
   }
   .app{
     display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-areas: 
-    'subreddit search search'
-    'outlet outlet trend'
-    'footer footer footer';
+    'subreddit search search search'
+    'outlet outlet outlet trend'
+    'footer footer footer footer';
     gap:1rem;
   }
  .subreddit-list-smallerScreen{
