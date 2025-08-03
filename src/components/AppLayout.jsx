@@ -8,15 +8,15 @@ import './AppLayout.css';
 
  function AppLayout() {
   return (
-    <div className="app">
-      <VoiceSearchBar />
-      <div className="middle">
-        <SubredditList />
-        <Outlet />
-        <TrendingSidebar />
-      </div>
-      <Footer />
-    </div>
+  <div className="app">
+            
+                <VoiceSearchBar />
+                <SubredditList />
+                <Outlet />
+                <TrendingSidebar />
+                 <Footer />
+            
+  </div>
   )
 }
 export default AppLayout;

@@ -20,6 +20,7 @@ const onSearchHandler = (e) => {
     const sanitized = sinitizedQuery(searchQuery.trim());
     const encodedQuery = encodeURIComponent(sanitized);
     navigate(`/result/${encodedQuery}`); 
+    searchinputRef.current.value=''
     };
 
 const handleVoiceSearch = () => {
@@ -62,8 +63,9 @@ const handleVoiceSearch = () => {
 
     /// till loading the button need to be disable.
  return (
+  <div className={'voiceSearc-grid'}>
     <div>
-        <h1>Search Reddit by Voice or Text</h1>
+        <h1 className={'title-search'}>Search Reddit by Voice or Text</h1>
         <div className="voice-search-container">
           <form className="voice-search-form" onSubmit={onSearchHandler}>
             <input
@@ -80,6 +82,7 @@ const handleVoiceSearch = () => {
             </button>
           </form>
         </div>
+   </div>
    </div>
 ) 
 }

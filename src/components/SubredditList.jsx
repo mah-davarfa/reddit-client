@@ -25,9 +25,10 @@ const SubredditList = () => {
  const [selectedSubreddit, setSelectedSubreddit] = useState(null);
 
  return (
+  <div className={'subreddit-grid'}>
     <div className="subreddit-wrapper">
         <div className="subreddit-list-bigScreen">
-          <h1>Subreddit Lists</h1>
+          <h2>Subreddit Lists</h2>
           <div className="subreddit-scrollable">
             {subredditListsStatus === 'success' &&
               popularsubredditLists.map((item) =>
@@ -61,7 +62,7 @@ const SubredditList = () => {
 
 
         <div className='subreddit-list-smallerScreen'>
-            <select onChange={(e)=>handleToGetSubreddit(e.target.value)}>
+            <select onChange={(e)=>handleToGetSubreddit(e.target.value)} className="dropdown-menu" >
                 <option value=' '>Subreddit</option>
                 {subredditListsStatus === 'loading' && <option>Loading...</option>}
                 
@@ -75,5 +76,6 @@ const SubredditList = () => {
         </div>
         
     </div>
+  </div>  
 ) }
 export default SubredditList;

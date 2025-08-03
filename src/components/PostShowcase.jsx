@@ -118,27 +118,29 @@ const postId = post.id;
   // console.log('commentIndex[selectedPostId]: ', commentIndex[selectedPostId]);
   
  return (
+  <div className={'postshowcase-grid'}>
   <div className="postshowcase-wrapper">
-    <h1>PostShowcase</h1>
+    <h2>PostShowcase</h2>
     <div className="postshowcase-scrollable">
       {posts.map((post) => (
         <div key={post.id} className="postshowcase-item">
-          <h2>{post.title}</h2>
+          <h3>{post.title}</h3>
           <p>Subreddit: {post.subreddit}</p>
           
                       
           {post.is_video ? (
             
-            <video src={post.url} controls muted width="50%"  >
+            <video src={post.url} controls muted width="50%" className={'video-shadow'} >
               Your browser does not support the video tag.
             </video>
           ) : isImageUrl(post.url) ? (
-            <img src={post.url} alt={post.title} width="50%"  />
+            <img src={post.url} alt={post.title} width="50%" className={'img-shadow'} />
           ) : post.url?.includes("/gallery/") && post.media_metadata ? (
             renderGallery(post)
           ):null }
            <p>Upvotes: {post.ups}</p>
-           <p onClick={()=>handleGetComment(post)} className={isGetCommentClicked.some(id=>id===post.id) ?'commentClicked':'getComment'} >Get All {post.comments} Comments </p>
+           <p onClick={()=>handleGetComment(post)} className=
+           {isGetCommentClicked.some(id=>id===post.id) ?'commentClicked':'getComment'} >Get All {post.comments} Comments </p>
            {commentsStatus === 'loading' && <p>Loading comments...</p>}
            {commentsStatus === 'rejected' && <p>Error loading comments</p>}
            
@@ -163,6 +165,7 @@ const postId = post.id;
       ))}
       </div>
     </div>
+   </div> 
   );
 };
 

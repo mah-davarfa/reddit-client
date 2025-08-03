@@ -54,6 +54,7 @@ app.get('/api/subredditlists/:popular',async(req, res)=>{
         res.json(response.data); // Sends the subreddit lists data back to the client(subredditListsSlice)
 
     }catch(error){
+        console.error("Reddit API error:", error.response?.status, error.message);
         res.status(500).json({error: 'Failed to fetch subreddit lists in startup'});
     }
 })

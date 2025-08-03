@@ -3,6 +3,7 @@ import React from "react";
 
 const Footer = () => {
   return (
+    <div className={'footer-grid'}>
     <footer className="footer">
       <div className="footer-links">
         <p>Built by Mahmoud Davarfara</p>
@@ -12,8 +13,10 @@ const Footer = () => {
         <a href="Mah.Davarfa@gmail.com">Email</a>
       </div>
       <div className="footer-tech">
-        <p>Powered by:</p>
+        
         <ul>
+          <li>Powered by:</li>
+          <li>JavaScript</li>
           <li>React</li>
           <li>Redux Toolkit</li>
           <li>Redux Thunk </li>
@@ -23,6 +26,7 @@ const Footer = () => {
         </ul>
       </div>
     </footer>
+    </div >
   );
 };
 

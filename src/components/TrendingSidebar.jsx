@@ -12,7 +12,9 @@ const trendingSubreddits = [
   'picture',
   'Showerthoughts',
   'aww',
-  
+  'date',
+  'crazy',
+  'cat fight',
 ];
 
 const TrendingSidebar = () => {
@@ -27,9 +29,10 @@ const getItem = (item) => {
 
 
  return (
+<div className={"trendding-grid"}>  
 <div className="trending-sidebar-wrapper">
   <div className="trending-sidebar">
-    <h1 className="trending-title">Do NOT Miss This Section</h1>
+    <h2 className="trending-title">Don't Miss This Section</h2>
     <div className="trending-scrollable">
       {trendingSubreddits.map((item) => (
         <button
@@ -43,6 +46,7 @@ const getItem = (item) => {
       ))}
     </div>
   </div>
+</div>
 </div>
 ) }
 export default TrendingSidebar;
