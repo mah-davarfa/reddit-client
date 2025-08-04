@@ -32,9 +32,15 @@ app.get('/api/search',async (req ,res)=>{
   }
 });
         res.json(response.data); // Sends the data received from the external API back to the client
-    }catch(error) {
-        res.status(500).json({ error: 'Failed to fetch Reddit data' }); // If there's an error, it sends a 500 status with an error message
-    }
+    }catch (error) {
+  console.error(
+    "Reddit API error:",
+    error.response?.status,
+    error.message,
+    error.response?.data
+  );
+  res.status(500).json({ error: "Failed to fetch Reddit data" });
+}
 });
     
     //conetion path to clint app:'/api/comments' in slice we have (`/api/comments/${postId}`)
@@ -49,9 +55,15 @@ app.get('/api/comments/:postId', async (req ,res)=>{
 });
              res.json(response.data); // Sends the comments data back to the client
             
-    }catch(error){
-        res.status(500).json({error: 'Failed to fetch comments'});
-    }
+    }catch (error) {
+  console.error(
+    "Reddit API error:",
+    error.response?.status,
+    error.message,
+    error.response?.data
+  );
+  res.status(500).json({ error: "Failed to fetch Reddit data" });
+}
 })
 
 //conection to clint (subredditlistsSlice) fetching using (/api/subredditlists/popular)
@@ -66,10 +78,15 @@ app.get('/api/subredditlists/:popular',async(req, res)=>{
 
         res.json(response.data); // Sends the subreddit lists data back to the client(subredditListsSlice)
 
-    }catch(error){
-        console.error("Reddit API error:", error.response?.status, error.message);
-        res.status(500).json({error: 'Failed to fetch subreddit lists in startup'});
-    }
+    }catch (error) {
+  console.error(
+    "Reddit API error:",
+    error.response?.status,
+    error.message,
+    error.response?.data
+  );
+  res.status(500).json({ error: "Failed to fetch Reddit data" });
+}
 })
 
 // this opens the door for clint app to comiunicate with the backend server
