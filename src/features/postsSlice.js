@@ -13,12 +13,7 @@ const initialState ={
 // then (slice'sname /thunk function's name) going to be string and goes  to here 
 // : createAsyncThunk("posts/fetchposts'', async () => {}) ,
 export const fetchposts = createAsyncThunk('posts/fetchposts', async(searchQuery)=>{
-    const response = await axios.get(`https://reddit-api-backend-hork.onrender.com/api/search?q=${searchQuery}`, {
-  headers: {
-    'User-Agent': 'reddit-proxy-app/1.0'
-  }
-});
-
+    const response = await axios.get(`https://reddit-api-backend-hork.onrender.com/api/search?q=${searchQuery}`)
     console.log('raw response.data.data.children.map((item) => item.data): ',response.data.data.children.map((item) => item.data));
     
     const items = response.data.data.children;

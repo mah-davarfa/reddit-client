@@ -10,11 +10,7 @@ const initialState ={
 
 export const fetchComments = createAsyncThunk('comments/fetchComments', async(postId)=>{
     console.log('comment Thunk postId: ', postId);
-    const response = await axios.get(`https://reddit-api-backend-hork.onrender.com/api/comments/${postId}`, {
-  headers: {
-    'User-Agent': 'reddit-proxy-app/1.0'
-  }
-});
+    const response = await axios.get(`https://reddit-api-backend-hork.onrender.com/api/comments/${postId}`);
     //console.log('comment Thunk  response.data[1].data.children.map((item)=>item.data: ', response.data[1].data.children.map((item)=>item.data));
     //console.log('comment Thunk  response.data[1].data.children.map((item)=>item.data.body: ', response.data[1].data.children.map((item)=>item.data.body));
 

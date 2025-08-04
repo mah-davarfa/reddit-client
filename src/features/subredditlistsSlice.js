@@ -8,11 +8,7 @@ const initialState = {
 }
 
 export const fetchSubredditListsInStartup = createAsyncThunk('subredditLists/fetchSubredditListsInStartup', async (popular) => {
-    const response = await axios.get(`https://reddit-api-backend-hork.onrender.com/api/subredditlists/${popular}`, {
-  headers: {
-    'User-Agent': 'reddit-proxy-app/1.0'
-  }
-});
+    const response = await axios.get(`https://reddit-api-backend-hork.onrender.com/api/subredditlists/${popular}`);
 
     const lists = response.data.data.children.map((item)=>({
       id: item.data.id,

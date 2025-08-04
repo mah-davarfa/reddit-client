@@ -26,7 +26,11 @@ app.get('/api/search',async (req ,res)=>{
     const encodedQuery = encodeURIComponent(q); // Encodes the query to ensure it's safe for URLs
      try{
         //end point to get search `https://www.reddit.com/search.json?q=${encodeURIComponent(searchQuery)}`
-        const response = await axios.get(`https://www.reddit.com/search.json?q=${encodedQuery}`);
+        const response = await axios.get(`https://www.reddit.com/search.json?q=${encodedQuery}`, {
+  headers: {
+    'User-Agent': 'web:reddit.proxy.app:v1.0.0 (by /u/mahdev42)'
+  }
+});
         res.json(response.data); // Sends the data received from the external API back to the client
     }catch(error) {
         res.status(500).json({ error: 'Failed to fetch Reddit data' }); // If there's an error, it sends a 500 status with an error message
@@ -38,7 +42,11 @@ app.get('/api/comments/:postId', async (req ,res)=>{
     const {postId} = req.params; // because thunk is: (`/api/comments/${postId}`)Extracts the postId from the request parameters
    try{
         ///for getting comment the endpoint is; `https://www.reddit.com/comments/${postId}.json` 
-            const response = await axios.get(`https://www.reddit.com/comments/${postId}.json`);
+            const response = await axios.get(`https://www.reddit.com/comments/${postId}.json`, {
+  headers: {
+    'User-Agent': 'web:reddit.proxy.app:v1.0.0 (by /u/mahdev42)'
+  }
+});
              res.json(response.data); // Sends the comments data back to the client
             
     }catch(error){
@@ -50,7 +58,12 @@ app.get('/api/comments/:postId', async (req ,res)=>{
 app.get('/api/subredditlists/:popular',async(req, res)=>{
     const {popular} = req.params; // Extracts the popular parameter from the request parameters
     try{
-        const response = await axios.get (`https://www.reddit.com/subreddits/${popular}.json`);
+        const response = await axios.get(`https://www.reddit.com/subreddits/${popular}.json`, {
+  headers: {
+    'User-Agent': 'web:reddit.proxy.app:v1.0.0 (by /u/mahdev42)'
+  }
+});
+
         res.json(response.data); // Sends the subreddit lists data back to the client(subredditListsSlice)
 
     }catch(error){
