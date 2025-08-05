@@ -9,12 +9,11 @@ const initialState ={
 //https://www.reddit.com/comments/{postId}.json but we using backend server to get comments
 //lets make connection to either bankend server or to render.com dynamic
 const baseUrl = import.meta.env.PROD
-    ? '/api'
-  : 'https://your-backend-name.onrender.com/api';
-
+  ? 'https://your-backend-name.onrender.com/api'  // PROD → use Render
+  : '/api';                                       // DEV → use Vite proxy
 export const fetchComments = createAsyncThunk('comments/fetchComments', async(postId)=>{
     console.log('comment Thunk postId: ', postId);
-    const response = await axios.get(`${baseUrl}/api/comments/${postId}`);
+    const response = await axios.get(`${baseUrl}/comments/${postId}`);
     //console.log('comment Thunk  response.data[1].data.children.map((item)=>item.data: ', response.data[1].data.children.map((item)=>item.data));
     //console.log('comment Thunk  response.data[1].data.children.map((item)=>item.data.body: ', response.data[1].data.children.map((item)=>item.data.body));
 

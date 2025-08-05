@@ -11,8 +11,8 @@ const initialState ={
 ///https://www.reddit.com/search.json?q=cats+playing+piano
 //lets make connection to either bankend server or to render.com dynamic
 const baseUrl = import.meta.env.PROD
-    ? '/api'
-  : 'https://your-backend-name.onrender.com/api';
+  ? 'https://your-backend-name.onrender.com/api'  // PROD → use Render
+  : '/api';                                       // DEV → use Vite proxy
 
 
 
@@ -21,7 +21,7 @@ const baseUrl = import.meta.env.PROD
 // : createAsyncThunk("posts/fetchposts'', async () => {}) ,
 export const fetchposts = createAsyncThunk('posts/fetchposts', async(searchQuery)=>{
     
-  const response = await axios.get(`${baseUrl}/api/search?q=${searchQuery}`)
+  const response = await axios.get(`${baseUrl}/search?q=${searchQuery}`)
     console.log('raw response.data.data.children.map((item) => item.data): ',response.data.data.children.map((item) => item.data));
     
     const items = response.data.data.children;
