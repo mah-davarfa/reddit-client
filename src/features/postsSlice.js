@@ -10,8 +10,9 @@ const initialState ={
 }
 ///https://www.reddit.com/search.json?q=cats+playing+piano
 //lets make connection to either bankend server or to render.com dynamic
-const baseUrl = import.meta.env.PROD
-  ? 'https://your-backend-name.onrender.com/api'  // PROD → use Render
+
+  const baseUrl = import.meta.env.PROD
+  ? 'https://reddit-api-backend-hork.onrender.com/api'  // PROD → use Render
   : '/api';                                       // DEV → use Vite proxy
 
 
