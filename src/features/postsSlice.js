@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+ import {createSlice} from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -9,11 +9,19 @@ const initialState ={
     
 }
 ///https://www.reddit.com/search.json?q=cats+playing+piano
+//lets make connection to either bankend server or to render.com dynamic
+const baseUrl = import.meta.env.PROD
+  ? 'https://reddit-api-backend-hork.onrender.com'
+  : '';
+
+
+
 
 // then (slice'sname /thunk function's name) going to be string and goes  to here 
 // : createAsyncThunk("posts/fetchposts'', async () => {}) ,
 export const fetchposts = createAsyncThunk('posts/fetchposts', async(searchQuery)=>{
-    const response = await axios.get(`https://reddit-api-backend-hork.onrender.com/api/search?q=${searchQuery}`)
+    
+  const response = await axios.get(`${baseUrl}/api/search?q=${searchQuery}`)
     console.log('raw response.data.data.children.map((item) => item.data): ',response.data.data.children.map((item) => item.data));
     
     const items = response.data.data.children;

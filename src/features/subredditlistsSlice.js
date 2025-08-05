@@ -6,9 +6,12 @@ const initialState = {
     status: 'idle',
     error: null,
 }
-
+//lets make connection to either bankend server or to render.com dynamic
+const baseUrl = import.meta.env.PROD
+  ? 'https://reddit-api-backend-hork.onrender.com'
+  : '';
 export const fetchSubredditListsInStartup = createAsyncThunk('subredditLists/fetchSubredditListsInStartup', async (popular) => {
-    const response = await axios.get(`https://reddit-api-backend-hork.onrender.com/api/subredditlists/${popular}`);
+    const response = await axios.get(`${baseUrl}/api/subredditlists/${popular}`);
 
     const lists = response.data.data.children.map((item)=>({
       id: item.data.id,

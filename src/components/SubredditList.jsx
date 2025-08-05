@@ -30,6 +30,8 @@ const SubredditList = () => {
         <div className="subreddit-list-bigScreen">
           <h2>Subreddit Lists</h2>
           <div className="subreddit-scrollable">
+          {  subredditListsStatus === 'loading' && <p>Loading comments...</p>} 
+          {  subredditListsStatus === 'rejected' && <p>Error in loading</p>}
             {subredditListsStatus === 'success' &&
               popularsubredditLists.map((item) =>
                 item.url ? (
