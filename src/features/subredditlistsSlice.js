@@ -6,10 +6,8 @@ const initialState = {
     status: 'idle',
     error: null,
 }
-//lets make connection to either bankend server or to render.com dynamic
-const baseUrl = import.meta.env.PROD
-  ? 'https://reddit-api-backend-hork.onrender.com/api'  // PROD → use Render
-  : '/api';                                         // DEV → use Vite proxy
+const baseUrl = 'https://reddit-api-backend-hork.onrender.com/api';  
+                                      // DEV → use Vite proxy
 export const fetchSubredditListsInStartup = createAsyncThunk('subredditLists/fetchSubredditListsInStartup', async (popular) => {
     const response = await axios.get(`${baseUrl}/subredditlists/${popular}`);
 

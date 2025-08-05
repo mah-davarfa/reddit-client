@@ -9,13 +9,7 @@ const initialState ={
     
 }
 ///https://www.reddit.com/search.json?q=cats+playing+piano
-//lets make connection to either bankend server or to render.com dynamic
-
-  const baseUrl = import.meta.env.PROD
-  ? 'https://reddit-api-backend-hork.onrender.com/api'  // PROD → use Render
-  : '/api';                                       // DEV → use Vite proxy
-
-
+const baseUrl = 'https://reddit-api-backend-hork.onrender.com/api';
 
 
 // then (slice'sname /thunk function's name) going to be string and goes  to here 
