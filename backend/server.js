@@ -4,8 +4,7 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 
 dotenv.config();
-//Positive-Pickle-5460
-//secret	8CgUrZr-k1CKb6Vfb6KNzjP0Rpn9wA
+
 
 const app = express();
 const PORT = 3000;
