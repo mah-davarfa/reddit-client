@@ -8,8 +8,8 @@ const initialState = {
 }
 //lets make connection to either bankend server or to render.com dynamic
 const baseUrl = import.meta.env.PROD
-  ? 'https://reddit-api-backend-hork.onrender.com'
-  : '';
+    ? '/api'
+  : 'https://your-backend-name.onrender.com/api';
 export const fetchSubredditListsInStartup = createAsyncThunk('subredditLists/fetchSubredditListsInStartup', async (popular) => {
     const response = await axios.get(`${baseUrl}/api/subredditlists/${popular}`);
 
