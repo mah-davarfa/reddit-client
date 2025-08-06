@@ -6,8 +6,8 @@ const initialState = {
     status: 'idle',
     error: null,
 }
-//const baseUrl = 'https://reddit-api-backend-hork.onrender.com/api';//for render as backend
-const baseUrl = '/api';// for server.js as backend
+const baseUrl = 'https://reddit-api-backend-hork.onrender.com/api';//for render as backend
+//const baseUrl = '/api';// for server.js as backend
 
 export const fetchSubredditListsInStartup = createAsyncThunk('subredditLists/fetchSubredditListsInStartup', async (popular) => {
     const response = await axios.get(`${baseUrl}/subredditlists/${popular}`);
