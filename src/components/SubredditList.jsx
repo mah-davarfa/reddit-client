@@ -64,7 +64,9 @@ const SubredditList = () => {
 
 
         <div className='subreddit-list-smallerScreen'>
-            <select onChange={(e)=>handleToGetSubreddit(e.target.value)} className="dropdown-menu" >
+          
+            <select aria-label="Subreddit selector" onChange={(e)=>handleToGetSubreddit(e.target.value)}
+             className="dropdown-menu" >
                 <option value=' '>Subreddit</option>
                 {subredditListsStatus === 'loading' && <option>Loading...</option>}
                 
