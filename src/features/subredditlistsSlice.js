@@ -6,11 +6,12 @@ const initialState = {
     status: 'idle',
     error: null,
 }
-const baseUrl = 'https://reddit-api-backend-hork.onrender.com/api';//for render as backend
-//const baseUrl = '/api';// for server.js as backend
+//const baseUrl = 'https://reddit-api-backend-hork.onrender.com/api';//for render as backend
+const baseUrl = '/api';// for server.js as backend
 
-export const fetchSubredditListsInStartup = createAsyncThunk('subredditLists/fetchSubredditListsInStartup', async (popular) => {
-    const response = await axios.get(`${baseUrl}/subredditlists/${popular}`);
+export const fetchSubredditListsInStartup = createAsyncThunk('subredditLists/fetchSubredditListsInStartup', async (popular,{helperFn}) => {
+  try{
+      const response = await axios.get(`${baseUrl}/subredditlists/${popular}`);
 
     const lists = response.data.data.children.map((item)=>({
       id: item.data.id,
@@ -19,10 +20,29 @@ export const fetchSubredditListsInStartup = createAsyncThunk('subredditLists/fet
       url: item.data.url,
       img: item.data.icon_img,
     }))
-    console.log('fetchSubredditListsInStartup response.data.data.children.map((item)=>: ', lists);
+    //console.log('fetchSubredditListsInStartup response.data.data.children.map((item)=>: ', lists);
     return lists;
-})
+  } catch(Error){
+    console.warn('fetching for second time because Render.com is waking up')
+      //make secondfetch wait till render wakesup and then fetch again
+    await new Promise ((resolve)=>setTimeout(resolve,4000));
+      try{
+        const reTryFtech = await axios.get(`${baseUrl}/subredditlists/${popular}`)
+        const reTryFtechResult = reTryFtech.data.data.children.map((item)=>({
+      id: item.data.id,
+      name: item.data.display_name,
+      title: item.data.title,
+      url: item.data.url,
+      img: item.data.icon_img,
+    }))
+      return reTryFtechResult;
+      } catch(error){
+        return helperFn(error?.message || 'Failed after retry')
+      
+  }
+}});
 
+  
 export const subredditlistsSlice = createSlice({
     name:'subredditlists',
     initialState,

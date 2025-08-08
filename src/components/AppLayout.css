@@ -414,12 +414,13 @@ h2 {
 
 .footer-links a {
   margin: 0 0.5rem;
-  color:#00e6e6;
+  color:#A3FFFF;
   text-decoration: none;
 }
 
 .footer-links a:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .footer-tech ul {

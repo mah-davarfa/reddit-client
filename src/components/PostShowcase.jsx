@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { fetchposts, selectorPosts, selectPostStatus, selectPostError } from "../features/postsSlice";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +23,15 @@ const PostShowcase = () => {
   const [selectedCommentsByPostId, setSelectedCommentsByPostId] = useState({});
   const [commentIndex , setCommentIndex] = useState({ });
   const [isGetCommentClicked, setIsGetCommentClicked] = useState([]);
+
+  useEffect(()=>{
+  const id= setTimeout(() => {
+    dispatch(fetchposts('picture'))
+  }, 4000);
+  return () => clearTimeout(id);
+ },[dispatch])
+ 
+ 
   useEffect(() => {
     if (searchQuery) {
       dispatch(fetchposts(searchQuery));
