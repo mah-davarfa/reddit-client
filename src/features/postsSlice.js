@@ -9,8 +9,8 @@ const initialState ={
     
 }
 ///https://www.reddit.com/search.json?q=cats+playing+piano
-//const baseUrl = 'https://reddit-api-backend-hork.onrender.com/api';//for render(publish) as backend
-const baseUrl = '/api';// for server.js as backend(production)
+const baseUrl = 'https://reddit-api-backend-hork.onrender.com/api';//for render(publish) as backend
+//const baseUrl = '/api';// for server.js as backend(production)
 
 
 // then (slice'sname /thunk function's name) going to be string and goes  to here 
