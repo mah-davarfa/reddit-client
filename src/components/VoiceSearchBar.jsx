@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate ,createSearchParams} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {useRef,useState} from 'react';
 
 
@@ -19,6 +19,7 @@ const onSearchHandler = (e) => {
     //// change the url that postShoCase sees it and postshowcase grabs searchquery for dispatch,
     const sanitized = sinitizedQuery(searchQuery.trim());
     const encodedQuery = encodeURIComponent(sanitized);
+    if(encodedQuery)
     navigate(`/result/${encodedQuery}`); 
     searchinputRef.current.value=''
     };
@@ -74,10 +75,10 @@ const handleVoiceSearch = () => {
               ref={searchinputRef}
               className={`voice-search-input ${isListening ? "listening" : ""}`}
             />
-            <button type="submit" className="voice-search-button">
+            <button type="submit" className="voice-search-button" disabled={isListening}>
               Search
             </button>
-            <button type="button" className="voice-mic-button" onClick={handleVoiceSearch}>
+            <button type="button" className="voice-mic-button" onClick={handleVoiceSearch} >
               🎤
             </button>
           </form>

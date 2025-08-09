@@ -1,6 +1,6 @@
 import React, {  useEffect, useState } from "react";
 import { fetchposts, selectorPosts, selectPostStatus, selectPostError } from "../features/postsSlice";
-
+import {selectSubredditListsStatus} from "../features/subredditlistsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams} from "react-router-dom";
 import {selectComments,selectCommentsStatus,selectCommentsError,fetchComments} from '../features/commentsSlice';
@@ -17,19 +17,16 @@ const PostShowcase = () => {
   const posts = useSelector(selectorPosts);
   const status = useSelector(selectPostStatus);
   const error = useSelector(selectPostError);
-
+  const firstfetchStatusOnStartup= useSelector(selectSubredditListsStatus);
   const [galleryIndex, setGalleryIndex] = useState({});
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [selectedCommentsByPostId, setSelectedCommentsByPostId] = useState({});
   const [commentIndex , setCommentIndex] = useState({ });
   const [isGetCommentClicked, setIsGetCommentClicked] = useState([]);
-
+  
   useEffect(()=>{
-  const id= setTimeout(() => {
-    dispatch(fetchposts('picture'))
-  }, 4000);
-  return () => clearTimeout(id);
- },[dispatch])
+      dispatch(fetchposts('picture'))
+   },[(firstfetchStatusOnStartup==='succeeded')])
  
  
   useEffect(() => {
@@ -148,8 +145,8 @@ const postId = post.id;
             renderGallery(post)
           ):null }
            <p>Upvotes: {post.ups}</p>
-           <p onClick={()=>handleGetComment(post)} className=
-           {isGetCommentClicked.some(id=>id===post.id) ?'commentClicked':'getComment'} >Get All {post.comments} Comments </p>
+           <button onClick={()=>handleGetComment(post) } className=
+           {isGetCommentClicked.some(id=>id===post.id) ?'commentClicked':'getComment'} >Get All {post.comments} Comments </button>
            {commentsStatus === 'loading' && <p>Loading comments...</p>}
            {commentsStatus === 'rejected' && <p>Error loading comments</p>}
            
@@ -160,12 +157,13 @@ const postId = post.id;
             
               <p className="comment-text">{selectedCommentsByPostId[post.id][commentIndex[post.id] || 0]?.comment} </p>
            <div className={'nextComment'}>
-              <p onClick={()=>handleNextComment(post.id)} >
-                Next Comment: {'>>>'} {(commentIndex[post.id] || 0) + 1}/{selectedCommentsByPostId[post.id].length}
-              </p>
-              < p onClick= {()=>phandlePreviuseComment(post.id)} >
+              < button onClick= {()=>phandlePreviuseComment(post.id)} >
                 {'<<<'}Previous comment  
-              </p>
+              </button>
+              <button onClick={()=>handleNextComment(post.id)} >
+                Next Comment: {'>>>'} {(commentIndex[post.id] || 0) + 1}/{selectedCommentsByPostId[post.id].length}
+              </button>
+              
             </div>
           </div>
            ) : null)): null}

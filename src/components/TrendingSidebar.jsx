@@ -23,7 +23,8 @@ const TrendingSidebar = () => {
     
     // Function to handle item click
 const getItem = (item) => {
-    navigate(`/result/${item}`);
+  const selected = encodeURIComponent(item)
+    navigate(`/result/${selected}`);
     setIsClicked(item);
 }
 

@@ -10,7 +10,7 @@ const Footer = () => {
         <a href="https://www.linkedin.com/in/mahmoud-davarfara-09b57933a" target="_blank" rel="noopener noreferrer">
           LinkedIn
         </a>
-        <a href="Mah.Davarfa@gmail.com">Email</a>
+        <a href="mailto:Mah.Davarfa@gmail.com">Email</a>
       </div>
       <div className="footer-tech">
         
