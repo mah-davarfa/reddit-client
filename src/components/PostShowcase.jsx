@@ -24,9 +24,11 @@ const PostShowcase = () => {
   const [commentIndex , setCommentIndex] = useState({ });
   const [isGetCommentClicked, setIsGetCommentClicked] = useState([]);
   
-  useEffect(()=>{
-      dispatch(fetchposts('picture'))
-   },[(firstfetchStatusOnStartup==='succeeded')])
+useEffect(() => {
+  if (firstfetchStatusOnStartup === 'success') {
+    dispatch(fetchposts('picture'));
+  }
+}, [firstfetchStatusOnStartup, dispatch]);
  
  
   useEffect(() => {

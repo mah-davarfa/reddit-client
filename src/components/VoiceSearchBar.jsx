@@ -78,7 +78,7 @@ const handleVoiceSearch = () => {
             <button type="submit" className="voice-search-button" disabled={isListening}>
               Search
             </button>
-            <button type="button" className="voice-mic-button" onClick={handleVoiceSearch} >
+            <button  aria-label="Start voice search"  type="button" className="voice-mic-button" onClick={handleVoiceSearch} >
               🎤
             </button>
           </form>

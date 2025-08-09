@@ -68,3 +68,4 @@ export const subredditlistsSlice = createSlice({
 export const selectSuretitredditLists = (state) => state.subredditlists.subredditList;
 export const selectSubredditListsStatus = (state) => state.subredditlists.status;
 export const selectSubredditListsError = (state) => state.subredditlists.error;
+export default subredditlistsSlice.reducer;
