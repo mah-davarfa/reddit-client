@@ -10,6 +10,13 @@ Watch the full demo on YouTube: [Reddit-Ap  Demo]:(https://youtu.be/EwLeTQ93hUA)
 ## 📷 Screenshots
 ![Screenshot 1](./src/assets/screenshots/1.png)
 ![Screenshot 1](./src/assets/screenshots/2.png)
+## Lighthouse Performance
+
+This project scores highly in performance, accessibility, and SEO.
+
+[📄 View the Lighthouse Report for desktop](./lighthouse/lighthouse-report-desktop2025-08-10.html)
+[📄 View the Lighthouse Report for mobail](./lighthouse/lighthouse-report-mobail2025-08-10.html)
+
 🚀 Features
 🔍 Search
 Text Search – Enter a query to fetch matching Reddit posts.
