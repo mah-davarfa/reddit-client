@@ -10,7 +10,11 @@ import commentsReducer from '../features/commentsSlice';
 import subredditlistsReducer, {
   fetchSubredditListsInStartup
 } from '../features/subredditlistsSlice';
-
+//testing useeffect to see after subretitlist status becomes success, fetchposts("picture") is called and this is proceeded to test:
+//mock axios->create temperory store->before anythig clearAllMocks and create mock resoponse for axios.get by beforeEach()->
+// start test->{create moct reducer for store for all components->render component->check on something in the target component like p h tag->check axios.get has not call yet->
+//then flip subreddit status to success by 'await act(async ()=>{store.dispatch(fetchSubredditListsInStartup.fulfilled([], 'req1', 'popular'))})'->
+//use await waitFor() till axios.get to be called with the expected stringContaining URL }
 jest.mock('axios');
 
 const makeStore = (preloadedState) =>

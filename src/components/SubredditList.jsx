@@ -3,7 +3,7 @@ import { useDispatch,useSelector } from "react-redux";
 import {useNavigate} from "react-router-dom";
 import { fetchSubredditListsInStartup ,selectSubredditListsError,
     selectSuretitredditLists,selectSubredditListsStatus} from "../features/subredditlistsSlice";
-import { fetchposts } from "../features/postsSlice";
+
 
 const SubredditList = () => {
     const popularsubredditLists = useSelector(selectSuretitredditLists);
